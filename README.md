@@ -7,6 +7,16 @@ Za zajemanje slike se uporablja skripta `captureImage.py`, ker je python-picamer
 
 Za dekodiranje in kodiranje PNG slike se uporablja knjižnica **lodepng** (https://github.com/lvandeve/lodepng).
 
+## Instalacija
+Če želimo uporabljati orodje za kalibracijo programa za analizo slik, moramo vsebino tega repozitorija dodati v mapo spletneg strežnika, ki ima omogočen PHP in `exec` ukaz. Datoteki `connect4` in `captureImage.py` morata imeti nastavljene pravice tako, da ju lahko kdor koli zažene (777). Datoteki `capture.png` in `config.txt` morata imeti nastavljene pravice tako, da ju lahko kdor koli ureja (666).
+
+Da lahko spletni strežnik dela slike moramo uporabnika `www-data` dodati v skupino `video`. To naredimo z ukazom:
+```
+sudo usermod -a -G video www-data
+sudo service apache2 restart
+```
+Potem moramo ponovno zagnati spletni strežnik.
+
 ## Konfiguracija
 Konfiguracija se nahaja v datoteki `config.txt`.
 
@@ -42,6 +52,17 @@ X in Y od 0 do 3 so stiri tocke, ki prdstavljajo vogale igralne mreze
 
 > Konfiguracijski podatki morajo biti na vrhu datoteke!
 
+## Orodje za kalibracijo
+Orodje za kalibracijo se nahaja v `index.php`. 
+
+V okvirčku **Analysed image** vidimo obdelano sliko. Na njej lahko določimo robove igralne površine tako, da povelčemo kotne točke. 
+
+Vsaka celica je prekrita s kvadratkom, v katerem so piksli označeni z barvo, če glede na hue komponento HSV barve spadajo v določeno območje. To območje lahko določimo na **Hue histogram**. Če piksel ni dovolj saturiran se pobarva z belo barvo. Prag satureacije lahko nastavimo v okvirčku **Settings**. Če piksel ne ustreza nobenemu od prej naštetih pogojev se pobarva z sivo barvo.
+
+V okvirčku **Settings** lahko nastavimo tudi velikost kvadratkov, ki prekrivajo celice, in delež pobarvanih pikslov v celici, ki je potreben za prepoznavo žetona (če je *PX count threshold* nastavljen na 0.5 to pomeni da mora biti polovica celice pobarvana, da se označi z določeno barvo).
+
+Ko smo zadovoljeni s konfiguracijo, jo lahko shranimo s klikom na gumb *Submit* v okvirčku **Compiled configuration**.
+
 ## Delovanje programa
 
 Program pocaka, da uporabnik naredi potezo in pritisne gumb. Nato zajame sliko tako da izvede python skripto `captureImage.py`.
@@ -55,13 +76,13 @@ yellow = 0
 green = 0
 # pojdi čez vse piksle v kvadratu, ki prekriva skoraj celo celico
 for pixel in kvadrat:
-    n++
+    n += 1
     # preštej rumene in zelene piksle
     if pixel.saturation > 0.3 :
         if pixel.hue < 60/255.0 :
-            yellow++
+            yellow += 1
         else:
-            green++
+            green += 1
 #če je pikslov ene barve več kot tretjina, označi celico
 if yellow > n/3 :
     label = "O"

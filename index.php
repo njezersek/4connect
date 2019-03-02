@@ -1,7 +1,7 @@
 <?php
 	// save configuration
     if(isset($_POST["config"])){
-        if(file_put_contents("/home/pi/connect4v2/config.txt", $_POST["config"])){
+        if(file_put_contents("config.txt", $_POST["config"])){
             //echo "configuration saved!";
         }
 
@@ -12,15 +12,18 @@
 <?php
 	// capture new image
 	if(isset($_GET["capture"])){
-		echo exec("python captureImage.py");
+		shell_exec("python captureImage.py");
 		header("Location: index.php");
 	}
 ?>
 <?php
 	// load config
-	$config = file_get_contents("/home/pi/connect4v2/config.txt");
+	$config = file_get_contents("config.txt");
 	$config = str_replace("\n", " ", $config);
 	$values = explode(" ", $config);
+	if(count($values) <= 1){
+		$values = array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+	}
 ?>
 <head>
 	<meta charset="utf-8">
