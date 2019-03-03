@@ -22,6 +22,8 @@ public:
 	int hueOmin = 0;
 	int hueOmax = 0;
 	float threshold = 0.333333;
+	bool debug = false;
+	int player = Igra::X;
 
 	Connect4CV();
 	~Connect4CV();

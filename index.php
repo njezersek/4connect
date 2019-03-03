@@ -89,7 +89,7 @@
 		</div>
 		<div class="pane">
 			<div class="title">Original image</div>
-			<img src="capture.png">
+			<img src="capture.png?t=<?php echo time();?>">
 		</div>
 		<div class="pane">
 			<div class="title">Histograms</div>
@@ -172,7 +172,7 @@
 	];
 	bg = new Image();
 	bg.onload = render;
-	bg.src = "capture.png";
+	bg.src = "capture.png?t=<?php echo time();?>";
 
 	function render(){
 		c.width = bg.width;

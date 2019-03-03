@@ -220,10 +220,10 @@ void Connect4CV::analyse(Igra & igra) {
 
 				igra.data[i][j] = 0;
 				if (nX > n*threshold) {
-					igra.data[i][j] = Igra::X;
+					igra.data[i][j] = player;
 				}
 				if (nO > n*threshold) {
-					igra.data[i][j] = Igra::O;
+					igra.data[i][j] = player*-1;
 				}
 
 			}
@@ -231,11 +231,12 @@ void Connect4CV::analyse(Igra & igra) {
 	}
 	//igra.prikazi();
 
+	if(debug)saveImageData("analysed.png");
 
-	saveImageData("analysed.png");
 }
 
 void Connect4CV::loadImageData(std::string inputPath) {
+	imageData = std::vector<unsigned char>();
 	std::vector<unsigned char> inputFile;
 	unsigned error = lodepng::load_file(inputFile, inputPath);
 	if (!error) error = lodepng::decode(imageData, width, height, inputFile);
