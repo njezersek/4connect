@@ -1,9 +1,9 @@
 # Connect4 bot
-*verzija: 2.1 - Nejc Jezeršek - 1. 3. 2019*
+*verzija: 2.2 - Nejc Jezeršek - 1. 3. 2019*
 
-Glavni program je `connect4`. Poženemo ga z ukazom `./connect4`. Izvorna koda tega programa je napisana v C++ (zato da lahko dokaj hitro procesira slike in se odloča o potezi) in se nahaja v mapi `source/`. Program lahko prevedemo z ukazom `g++ source/* -o connect4 -O3`. Oznaka `-O3` pomeni da se program optimizira za največjo hitrost.
+Glavni program je `connect4`. Poženemo ga z ukazom `./connect4`. Izvorna koda tega programa je napisana v C++ (zato da lahko dokaj hitro procesira slike in se odloča o potezi) in se nahaja v mapi `source/`. Program lahko prevedemo z ukazom `g++ source/* -o connect4 -O3 -l wiringPi`. Oznaka `-O3` pomeni da se program optimizira za največjo hitrost.
 
-Za zajemanje slike se uporablja skripta `captureImage.py`, ker je python-picamera hitrejša od ukaza `raspistill`. Ta skripta naredi sliko in jo shrani v datoteko `capture.png`.
+Za zajemanje slike se uporablje ukaz `raspistill -e png -o capture.png --nopreview -t 1 -w 400 -h 300`.
 
 Za dekodiranje in kodiranje PNG slike se uporablja knjižnica **lodepng** (https://github.com/lvandeve/lodepng).
 

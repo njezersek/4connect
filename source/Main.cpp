@@ -3,11 +3,14 @@
 #include "Igra.h"
 #include "Minimax.h"
 #include "Connect4CV.h"
+#include "Bot.h"
 using namespace std;
 
 int tezavnost = 4;
 int zacne = Igra::X;
 int igralec = Igra::X;
+
+Bot bot;
 
 void clearConsole() {
 #ifdef _WIN32
@@ -21,7 +24,7 @@ void captureImage() {
 #ifdef _WIN32
 	
 #elif __linux__
-	system("python captureImage.py");
+	system("raspistill -e png -o capture.png --nopreview -t 1 -w 400 -h 300");
 #endif
 }
 
@@ -60,6 +63,7 @@ void izberiSimbolIgralca() {
 
 void zaciniIgro() {
 	clearConsole();
+	bot.goHome();
 	std::cout << "=== Nova igra ===\ntezavnost: " << tezavnost << "\n";
 	Connect4CV cv;
 	cv.debug = true;
@@ -86,6 +90,7 @@ void zaciniIgro() {
 			std::cout << "Odlocam se za potezo ...\n";
 			Moznost odlocitev = algoritem.odlocitev(igra);
 			std::cout << "Vrgel sem v stolpec " << odlocitev.x << "\n";
+			bot.dropColumn(odlocitev.x);
 			igra.postavi(odlocitev.x, odlocitev.y);
 			igra.prikazi();
 		}
