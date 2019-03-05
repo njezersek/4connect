@@ -74,10 +74,11 @@ void zaciniIgro() {
 	while (!igra.koncana) {
 		if (igra.naPotezi == igralec) {
 			std::cout << "\n-- Na potezi je igralec (" << ((igralec == Igra::X) ? 'X' : 'O') << ") -- \n";
-			std::cout << "Vrzi zeton in pritisni enter ...\n";
-			char izbira = -1;
-			izbira = std::cin.get();
-			if (izbira == 'q')break;
+			std::cout << "Vrzi zeton in pritisni gumb ...\n";
+			//char izbira = -1;
+			//izbira = std::cin.get();
+			//if (izbira == 'q')break;
+			bot.waitButton();
 			std::cout << "Zajemam sliko ...\n";
 			captureImage();
 			std::cout << "Analiziram sliko ...\n";

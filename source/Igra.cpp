@@ -31,8 +31,8 @@ void Igra::prikazi() {
 	std::cout << "\n";
 	for (int i = 0; i < h; i++) {
 		for (int j = 0; j < data[i].size(); j++) {
-			if (data[i][j] == 1)std::cout << 'X' << " ";
-			else if (data[i][j] == -1)std::cout << 'O' << " ";
+			if (data[i][j] == 1)std::cout << "\033[1;33mX\033[0m" << " ";
+			else if (data[i][j] == -1)std::cout << "\033[1;32mO\033[0m" << " ";
 			else std::cout << '.' << " ";
 		}
 		std::cout << "\n";

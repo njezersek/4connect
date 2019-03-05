@@ -39,6 +39,30 @@ public:
 	
 	}
 	
+	void waitButton(){
+		int buttonState = 0;
+		// pocakaj da je tipka pritisnjena
+		while(buttonState == 0){
+			buttonState = digitalRead(button);
+		}
+		usleep(10000);
+		// pocakaj da je tipka spuscena
+		while(buttonState == 1){
+			buttonState = digitalRead(button);
+		}
+	}
+	
+	void moveServo(int angle, int servoPin){
+		int delay = 20000;
+		int pulz = angle;
+		for(int i=0; i<10; i++){
+			digitalWrite(servoPin, 1);
+			usleep(pulz);
+			digitalWrite(servoPin, 0);
+			usleep(delay-pulz);
+		}
+	}
+	
 	void goHome(){
 		digitalWrite(dir, 0); // levo
 		int armCtrlState = 1;
@@ -90,42 +114,17 @@ public:
 	}
 	
 	void drop(){
-		int pulzUpper;
-		int pulzLower;
-		int delay = 20000;
 		//odpri zgornji servo in zapri spodnjega
-		pulzUpper = 0;
-		pulzLower = 1500;
-		for(int i=0; i<10; i++){
-			digitalWrite(servoLower, 1);
-			usleep(pulzLower);
-			digitalWrite(servoLower, 0);
-			usleep(delay-pulzLower);
-		}
-		for(int i=0; i<10; i++){
-			digitalWrite(servoUpper, 1);
-			usleep(pulzUpper);
-			digitalWrite(servoUpper, 0);
-			usleep(delay-pulzUpper);
-		}
+		moveServo(1500, servoLower);
+		moveServo(2000, servoUpper);
 		
+		usleep(10000);
 		// zapri zgornji servo
-		pulzUpper = 1500;
-		for(int i=0; i<10; i++){
-			digitalWrite(servoUpper, 1);
-			usleep(pulzUpper);
-			digitalWrite(servoUpper, 0);
-			usleep(delay-pulzUpper);
-		}
-		
+		moveServo(1500, servoUpper);
+		usleep(100000);
+
 		//odpri spodnji servo, da zeton pade ven
-		pulzLower = 0;
-		for(int i=0; i<10; i++){
-			digitalWrite(servoLower, 1);
-			usleep(pulzLower);
-			digitalWrite(servoLower, 0);
-			usleep(delay-pulzLower);
-		}
-		
+		moveServo(2000, servoLower);
+		usleep(100000);
 	}
 };
