@@ -1,5 +1,4 @@
-# Connect4 bot
-*verzija: 2.2 - Nejc Jezeršek - 1. 3. 2019*
+![4connect bot](4connect-logo.png)
 
 Glavni program je `connect4`. Poženemo ga z ukazom `./connect4`. Izvorna koda tega programa je napisana v C++ (zato da lahko dokaj hitro procesira slike in se odloča o potezi) in se nahaja v mapi `source/`. Program lahko prevedemo z ukazom `g++ source/* -o connect4 -O3 -l wiringPi`. Oznaka `-O3` pomeni da se program optimizira za največjo hitrost.
 
